@@ -8,5 +8,5 @@ project(task1
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "-Wall -Wpedantic -Wextra -lm -O2 -fno-stack-limit -std=c++1z")
 
-add_executable(task1 task1/main.cpp)
-add_executable(task2 task2/main.cpp)
+add_executable(task1st task1/main.cpp)
+add_executable(task2nd task2/main.cpp)
