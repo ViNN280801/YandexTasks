@@ -7,9 +7,15 @@
 #define forn(i, n) for (int i = 0; i < n; i++)
 
 // Returns "true" if value 'val' is in the bounds
-bool isValueInBounds(const int &val, const int &min, const int &max)
+bool isValueInBoundsUnstrict(const int &val, const int &min, const int &max)
 {
     return ((val >= min) and (val <= max));
+}
+
+// Returns "true" if value 'val' is in the bounds
+bool isValueInBoundsStrict(const int &val, const int &min, const int &max)
+{
+    return ((val >= min) and (val < max));
 }
 
 // Returns "true" if ID is in the bounds
@@ -55,7 +61,7 @@ int main()
     std::cin >> n;
 
     // Checking that count of logs is in bounds
-    if (not isValueInBounds(n, 2, 200000))
+    if (not isValueInBoundsUnstrict(n, 2, 200000))
     {
         std::cerr << "Value invalid!. Exiting" << std::endl;
         exit(EXIT_FAILURE);
@@ -77,9 +83,9 @@ int main()
     for (size_t i{0UL}; i < vec.size(); i++)
     {
         std::vector<std::string> checkVec{splitVecStringBy(vec.at(i), ' ')};
-        if ((not isValueInBounds(std::stoi(checkVec.at(0UL)), 1, 365)) or
-            (not isValueInBounds(std::stoi(checkVec.at(1UL)), 0, 24)) or
-            (not isValueInBounds(std::stoi(checkVec.at(2UL)), 0, 60)) or
+        if ((not isValueInBoundsUnstrict(std::stoi(checkVec.at(0UL)), 1, 365)) or
+            (not isValueInBoundsStrict(std::stoi(checkVec.at(1UL)), 0, 24)) or
+            (not isValueInBoundsStrict(std::stoi(checkVec.at(2UL)), 0, 60)) or
             (not isIDInBounds(std::stoul(checkVec.at(3UL)))) or
             ((checkVec.at(4UL).at(0UL) not_eq 'A') and (checkVec.at(4UL).at(0UL) not_eq 'B') and
              (checkVec.at(4UL).at(0UL) not_eq 'C') and (checkVec.at(4UL).at(0UL) not_eq 'S')))
