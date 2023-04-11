@@ -40,7 +40,6 @@
 |       |         |
 | :---: | :-----: |
 | Ввод  |  Вывод  |
-|  :-   |   -:    |
 | COVER | correct |
 | CLEAR | absent  |
 |       | present |
@@ -52,7 +51,6 @@
 |      |         |
 | :--: | :-----: |
 | Ввод |  Вывод  |
-|  :-  |   -:    |
 | ABBA | correct |
 | AAAA | absent  |
 |      | absent  |
@@ -63,7 +61,6 @@
 |       |         |
 | :---: | :-----: |
 | Ввод  |  Вывод  |
-|  :-   |   -:    |
 | ABCBC | present |
 | BBACA | correct |
 |       | present |
