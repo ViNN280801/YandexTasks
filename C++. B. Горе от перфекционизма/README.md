@@ -104,7 +104,7 @@
 <b>
     Компилятор: GNU GCC 12.2 C++20<br/>
     Вердикт: Неверный ответ<br/>
-    Статус: contest.submits.status.wrong
+    Статус: contest.submits.status.wrong<br/>
 </b>
 
 |     |              |                 |       |
