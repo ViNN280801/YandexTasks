@@ -4,7 +4,7 @@
 #include <ranges>
 #include <algorithm>
 #include <concepts>
-
+s
 /**
  * @brief Checks bounds of the number
  * @param num number to check
