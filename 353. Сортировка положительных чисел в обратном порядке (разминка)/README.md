@@ -11,10 +11,11 @@
 Это разминочная задача, к которой мы размещаем готовое решения, чтобы вы могли познакомиться с нашей автоматической системой проверки решений. Ввод и вывод осуществляется через файлы, либо через стандартные потоки ввода-вывода, как вам удобнее.
 
 Примеры решений:
-[GNU c++ 11 + network + libcurl + json](https://pastebin.com/r0iMSTPa).
-[Python 3.7 + network + requests](https://pastebin.com/wHtwKbk3).
-[Java 8 + network + json-simple](https://pastebin.com/nw27gBdm).
-[Golang 1.14.4 + network](https://pastebin.com/4J3bK8i8).
+
+- [GNU c++ 11 + network + libcurl + json](https://pastebin.com/r0iMSTPa).
+- [Python 3.7 + network + requests](https://pastebin.com/wHtwKbk3).
+- [Java 8 + network + json-simple](https://pastebin.com/nw27gBdm).
+- [Golang 1.14.4 + network](https://pastebin.com/4J3bK8i8).
 
 ## Формат ввода
 
@@ -54,7 +55,7 @@ using System.Text.Json;
 
 Пример ответа сервера для первого теста:
 
-```json
+```
 curl "http://127.0.0.1:7777?a=2&b=4"
 [
   8,
