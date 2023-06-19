@@ -2,8 +2,8 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
-#include <array>
-#include <iomanip>
+#include <array>   // For "std::array"
+#include <iomanip> // For "std::fixed" and "std::setprecision"
 
 /// @brief Describes dishes
 typedef struct
@@ -43,6 +43,7 @@ ushort get_ingr_props()
     // Get amount of ingredient and it's measurement unit
     std::cin >> amount >> measr_unit;
 
+    // Changing amount if it's necessary
     if (measr_unit == "kg" || measr_unit == "l")
         amount *= 1000;
     if (measr_unit == "tens")
@@ -53,7 +54,7 @@ ushort get_ingr_props()
 
 int main()
 {
-    // Count of dishes
+    // Count of dishes (1 <= val <= 1000)
     ushort n{};
     std::cin >> n;
 
@@ -72,9 +73,9 @@ int main()
         // Reserving space to store ingredients in future
         dishesDesc.at(i).ingrs.resize(dishesDesc.at(i).ingr_count);
 
+        // Filling name of the ingredient, it's amount and measurent unit
         for (int j{}; j < dishesDesc.at(i).ingr_count; j++)
         {
-            // Filling name of the ingredient, it's amount and measurent unit
             std::cin >> dishesDesc.at(i).ingrs.at(j).first;
             dishesDesc.at(i).ingrs.at(j).second = get_ingr_props();
         }
@@ -108,7 +109,7 @@ int main()
     std::cin >> m;
 
     // Filling ingredients description in the food catalogue
-    for (int i{}; i < m; ++i)
+    for (ushort i{}; i < m; ++i)
     {
         // Getting name of the ingredient
         std::string name;
@@ -121,7 +122,7 @@ int main()
         ingr.quantity_in_package = get_ingr_props();
 
         // Filling nutririon values (proteins, fats, carbohydrates and the energy value)
-        for (int j{}; j < 4; j++)
+        for (char j{}; j < 4; j++)
             std::cin >> ingr.nutr_val.at(j);
 
         // If count of ingredients is nil -> erase this ingredient as unnecessary
@@ -129,13 +130,13 @@ int main()
             ingr_map.erase(name);
     }
 
-    for (int i{}; i < n; i++)
+    for (ushort i{}; i < n; i++)
     {
         for (size_t j{}; j < dishesDesc.at(i).ingrs.size(); j++)
         {
             ingr_desc_t &ingr{ingr_map.at(dishesDesc.at(i).ingrs.at(j).first)};
             ingr.amount_to_buy += dishesDesc.at(i).friends_count * dishesDesc.at(i).ingrs.at(j).second;
-            for (int k{}; k < 4; k++)
+            for (char k{}; k < 4; k++)
                 dishesDesc.at(i).nutr_val.at(k) +=
                     (static_cast<double>(dishesDesc.at(i).ingrs.at(j).second) /
                      static_cast<double>(ingr.quantity_in_package)) *
@@ -144,7 +145,7 @@ int main()
     }
 
     // How much Vasya would spent money to prepare for it's birthday
-    int money{};
+    ulong money{};
 
     // Iterating by all non-repeating ingredients
     // Taking info about the ingredient from the catalog,
@@ -154,7 +155,7 @@ int main()
     for (auto &ingr : ingr_map)
     {
         ingr.second.amount_to_buy = (ingr.second.amount_to_buy + ingr.second.amount - 1) / ingr.second.amount;
-        money += static_cast<int>(ingr.second.amount_to_buy) * static_cast<int>(ingr.second.cost);
+        money += static_cast<ulong>(ingr.second.amount_to_buy) * static_cast<ulong>(ingr.second.cost);
     }
 
     // Outputting money to prepare for holiday
@@ -165,14 +166,14 @@ int main()
         std::cout << ingr.first << ' ' << ingr.second.amount_to_buy << '\n';
 
     // Iterating by dishes
-    for (int i{}; i < n; i++)
+    for (ushort i{}; i < n; i++)
     {
         // Outputting name of the dish
         std::cout << dishesDesc.at(i).name << ' ';
-        for (int j{}; j < 4; j++)
+        for (char j{}; j < 4; j++)
         {
             // Outputting nutrition values of each dish (with certain precision of floating point)
-            std::cout << std::setprecision(10) << dishesDesc.at(i).nutr_val.at(j) << ' ';
+            std::cout << std::fixed << std::setprecision(10) << dishesDesc.at(i).nutr_val.at(j) << ' ';
 
             // Moving to the next line when loop enumerates all of nutrition values
             if (j == 3)
