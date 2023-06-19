@@ -5,11 +5,11 @@
 #include <limits>
 
 /* === Type aliases for graph and markups vector === */
-using graph_type = std::vector<std::vector<std::pair<ushort, ushort>>>;
-using markups_type = std::vector<short>;
+using graph_type = std::vector<std::vector<std::pair<int, int>>>;
+using markups_type = std::vector<int>;
 /* ================================================= */
 
-constexpr bool traverse(graph_type &graph, markups_type &markups, ushort final_vertex, short markup, ushort bound)
+bool traverse(graph_type &graph, markups_type &markups, int final_vertex, int markup, int bound)
 {
     // Mark final vertex with specified value
     markups.at(final_vertex) = markup;
@@ -34,10 +34,10 @@ constexpr bool traverse(graph_type &graph, markups_type &markups, ushort final_v
     return true;
 }
 
-constexpr bool check_bounds(graph_type &graph, markups_type &markups, ushort nodes, ushort bound)
+bool check_bounds(graph_type &graph, markups_type &markups, int nodes, int bound)
 {
     // Traversy graph by it's nodes
-    for (ushort i{}; i < nodes; i++)
+    for (int i{}; i < nodes; i++)
         // If vertex marked with value '-1'
         if (markups.at(i) == -1)
             // And if
@@ -49,7 +49,7 @@ constexpr bool check_bounds(graph_type &graph, markups_type &markups, ushort nod
 int main()
 {
     // Count of nodes and count of edges of graph (3 <= val <= 10'000)
-    ushort nodes{}, edges{};
+    int nodes{}, edges{};
     std::cin >> nodes >> edges;
 
     // Variable that represents graph
@@ -59,25 +59,24 @@ int main()
     // u - initial vertex of th edge
     // v - final vertex of the edge
     // w - weight of the edge
-    for (ushort i{}; i < edges; i++)
+    for (int i{}; i < edges; i++)
     {
-        std::array<ushort, 3ul> edg_formatted;
-        for (char j{}; j < 3; j++)
-            std::cin >> edg_formatted.at(j);
+        int u{}, v{}, w{};
+        std::cin >> u >> v >> w;
 
         // Decreasing initial and final verteces
-        edg_formatted.at(0ul)--;
-        edg_formatted.at(1ul)--;
+        u--;
+        v--;
 
         // Adding final vertex and it's weight to the graph
-        graph.at(edg_formatted.at(0ul)).push_back({std::make_pair(edg_formatted.at(1ul), edg_formatted.at(2ul))});
+        graph.at(u).emplace_back(v, w);
 
         // Adding initial vertex and it's weight to the graph
-        graph.at(edg_formatted.at(1ul)).push_back({std::make_pair(edg_formatted.at(0ul), edg_formatted.at(2ul))});
+        graph.at(v).emplace_back(u, w);
     }
 
     // Initial and final verteces correspondingly
-    ushort initial_vertex{}, final_vertex{std::numeric_limits<ushort>::max()};
+    int initial_vertex{}, final_vertex{std::numeric_limits<int>::max()};
 
     // Markup vector of graph
     markups_type markups;
@@ -85,7 +84,7 @@ int main()
     // Traverse of graph
     while (final_vertex - initial_vertex > 1)
     {
-        auto middle{(initial_vertex + final_vertex) / 2};
+        int middle{(initial_vertex + final_vertex) / 2};
 
         // Replacing 'n' nodes with value -1
         markups.assign(nodes, -1);
