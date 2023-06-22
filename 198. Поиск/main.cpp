@@ -1,34 +1,49 @@
 #include <iostream>
+#include <string>
+#include <limits>
 #include <vector>
-#include <ranges>
-#include <algorithm>
 
-int solution()
+using ll = long long;
+using ld = long double;
+using intvector = std::vector<int>;
+using llvector = std::vector<ll>;
+using llmatrix = std::vector<llvector>;
+
+static constexpr int maxsizeN{100 * 1000 + 227};
+static constexpr int maxsizeK{105};
+
+void solution(intvector &vec, llmatrix &vecl, llmatrix &vecr)
 {
     int n{}, k{};
     std::cin >> n >> k;
 
-    std::vector<int> arr(n);
-
+    ll result{-std::numeric_limits<ll>::max()};
     for (int i{}; i < n; i++)
-        std::cin >> arr.at(i);
+    {
+        std::cin >> vec[i];
+        result = std::max(result, (ll)vec[i]);
+    }
 
-    int ans{*std::ranges::max_element(arr)};
+    if (result <= 0)
+    {
+        std::cout << result << '\n';
+        return;
+    }
 
-    if (ans <= 0)
-        return ans;
-
-    std::vector<std::vector<int>> vecl(n + 2ul, std::vector<int>(k + 2ul, 0));
-    std::vector<std::vector<int>> vecr(n + 2ul, std::vector<int>(k + 2ul, 0));
+    for (int i{}; i <= k; i++)
+    {
+        vecl[n + 1][i] = 0;
+        vecr[n + 1][i] = 0;
+    }
 
     for (int i{1}; i <= n; i++)
     {
         for (int j{}; j <= k; j++)
         {
-            vecl[i][j] = std::max(0, vecl[i - 1][j] + arr.at(i - 1));
+            vecl[i][j] = std::max(0ll, vecl[i - 1][j] + vec[i - 1]);
             if (j != 0)
                 vecl[i][j] = std::max(vecl[i][j], vecl[i - 1][j - 1]);
-            ans = std::max(ans, vecl[i][j]);
+            result = std::max(result, vecl[i][j]);
         }
     }
 
@@ -36,7 +51,7 @@ int solution()
     {
         for (int j{}; j <= k; j++)
         {
-            vecl[i][j] = vecl[i - 1][j] + arr.at(i - 1);
+            vecl[i][j] = vecl[i - 1][j] + vec[i - 1];
             if (j != 0)
                 vecl[i][j] = std::max(vecl[i][j], vecl[i - 1][j - 1]);
         }
@@ -46,7 +61,7 @@ int solution()
     {
         for (int j{}; j <= k; j++)
         {
-            vecr[i][j] = vecr[i + 1][j] + arr.at(i - 1);
+            vecr[i][j] = vecr[i + 1][j] + vec[i - 1];
             if (j != 0)
                 vecr[i][j] = std::max(vecr[i][j], vecr[i + 1][j - 1]);
         }
@@ -76,9 +91,9 @@ int solution()
 
     for (int i{1}; i < n; i++)
         for (int j{}; j <= k; j++)
-            ans = std::max(ans, vecl[i][j] + vecr[i + 1][k - j]);
+            result = std::max(result, vecl[i][j] + vecr[i + 1][k - j]);
 
-    return ans;
+    std::cout << result << '\n';
 }
 
 int main()
@@ -86,12 +101,12 @@ int main()
     int t{};
     std::cin >> t;
 
-    std::vector<int> ans;
-    for (int i{}; i < t; i++)
-        ans.emplace_back(solution());
+    intvector vec(maxsizeN);
+    llmatrix vecl(maxsizeN, llvector(maxsizeK, 0));
+    llmatrix vecr(maxsizeN, llvector(maxsizeK, 0));
 
-    for (auto const &a : ans)
-        std::cout << a << '\n';
+    while (t--)
+        solution(vec, vecl, vecr);
 
     return EXIT_SUCCESS;
 }
