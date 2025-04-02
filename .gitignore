@@ -1,0 +1,11 @@
+# VSCode
+.vscode/
+
+# Built files
+*.exe
+*.out
+*.a
+*.lib
+*.exp
+*.dll
+*.so
